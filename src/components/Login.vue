@@ -15,7 +15,7 @@
         <button class="btn btn-primary">
          Login
         </button>
-         <router-link to="/">Register</router-link>
+         <router-link to="/register">Register</router-link>
        </div>
 
      </form>
