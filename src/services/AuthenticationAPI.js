@@ -18,3 +18,6 @@ class AuthenticationAPI {
   }
 
 }
+
+export {AuthenticationAPI}
+

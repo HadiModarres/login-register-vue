@@ -1,4 +1,4 @@
-@import(AuthenticationAPI)
+import {AuthenticationAPI} from './AuthenticationAPI';
 
 class FirebaseAuthenticationAPI extends AuthenticationAPI{
 
@@ -8,7 +8,10 @@ class FirebaseAuthenticationAPI extends AuthenticationAPI{
    * @returns {Promise}
    */
   sendLoginRequest(user){
-   //todo
+      let promise = new Promise((resolve, reject) => {
+        resolve("sample_token");
+      });
+      return promise;
   }
 
   /**
@@ -20,3 +23,6 @@ class FirebaseAuthenticationAPI extends AuthenticationAPI{
    // todo
   }
 }
+
+export {FirebaseAuthenticationAPI}
+

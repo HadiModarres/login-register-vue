@@ -1,11 +1,9 @@
 class User {
-
   constructor() {
     this.__username = undefined;
     this.__password = undefined;
     this.__token = undefined;
   }
-
 
   set _username(value) {
     this.__username = value;
@@ -25,4 +23,7 @@ class User {
   }
   register(){
   }
+
 }
+
+export {User}

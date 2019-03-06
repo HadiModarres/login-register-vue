@@ -23,32 +23,36 @@
 </template>
 
 <script>
-    export default {
-      name: "Login",
-      methods:{
-        handleSubmit(e){
-          const { username, password } = this;
-          let authenticator = new FirebaseAuthenticationAPI();
-          let user = new User();
-          user._username = username;
-          user._password = password;
-          authenticator.sendLoginRequest(user).then((value => {
-            user.setToken(value);
-            // todo redirect to dashboard
-          }),(reason => {
-            // todo inform user of the problem
-          }));
+  import {FirebaseAuthenticationAPI} from '../services/FirebaseAuthenticationAPI';
+  import {User} from "@/services/User";
 
-        }
-      },
-      data () {
-        return {
-          username: '',
-          password: '',
-          submitted: false
-        }
+  export default {
+    name: "Login",
+    methods: {
+      handleSubmit(e) {
+        const {username, password} = this;
+        let authenticator = new FirebaseAuthenticationAPI();
+        let user = new User();
+        user._username = username;
+        user._password = password;
+        authenticator.sendLoginRequest(user).then((value => {
+          console.log('successful login, token received: ' + value);
+          user._token=value;
+          // todo redirect to dashboard
+        }), (reason => {
+          // todo inform user of the problem
+        }));
+
+      }
+    },
+    data() {
+      return {
+        username: '',
+        password: '',
+        submitted: false
       }
     }
+  };
 
 </script>
 
