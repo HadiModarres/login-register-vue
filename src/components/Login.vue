@@ -4,12 +4,12 @@
      <form @submit.prevent="handleSubmit">
        <div class="form-group">
          <label>Email Address</label>
-         <input class="form-control" type="email" placeholder="Enter your email address">
+         <input v-model="username" required class="form-control" type="email" placeholder="Enter your email address">
 
        </div>
        <div class="form-group">
          <label>Password</label>
-         <input class="form-control" type="password" minlength="8" placeholder="Enter your password">
+         <input v-model="password" required class="form-control" type="password" minlength="8" placeholder="Enter your password">
        </div>
        <div class="form-group">
         <button class="btn btn-primary">
@@ -27,7 +27,25 @@
       name: "Login",
       methods:{
         handleSubmit(e){
-          window.alert('handling submit now');
+          const { username, password } = this;
+          let authenticator = new FirebaseAuthenticationAPI();
+          let user = new User();
+          user._username = username;
+          user._password = password;
+          authenticator.sendLoginRequest(user).then((value => {
+            user.setToken(value);
+            // todo redirect to dashboard
+          }),(reason => {
+            // todo inform user of the problem
+          }));
+
+        }
+      },
+      data () {
+        return {
+          username: '',
+          password: '',
+          submitted: false
         }
       }
     }
