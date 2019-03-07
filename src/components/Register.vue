@@ -60,11 +60,10 @@
             user._password = password;
             fireStoreAPI.registerUser(user).then((value => {
               alert("registered successfully: "+value);
+              this.$router.push('Login');
             }),(reason => {
               alert("register failed: " + reason);
             }));
-            console.log('handling register, '+email+' ,'+password);
-
           }
       },
       data(){

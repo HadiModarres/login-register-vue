@@ -39,6 +39,7 @@
           console.log('successful login, token received: ' + value);
           user._token=value;
           alert("logged in: " + user._token);
+          this.$router.push({name:'Dashboard' , params: {user: user}});
         }), (reason => {
           // todo inform user of the problem
         }));
