@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import Dashboard from '@/components/Dashboard'
 import Login from '@/components/Login'
 import Register from '@/components/Register'
+import Settings from '@/components/Settings'
 
 
 Vue.use(Router)
@@ -24,6 +25,12 @@ export default new Router({
       path: '/Register',
       name: 'Register',
       component: Register
+    },
+    {
+      path: '/Settings',
+      name: 'Settings',
+      component: Settings,
+      props: true
     }
 
   ]

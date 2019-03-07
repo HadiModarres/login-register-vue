@@ -10,6 +10,7 @@ class User {
   get _token() {
     return this.__token;
   }
+
   constructor() {
     this.__username = undefined;
     this.__password = undefined;
@@ -28,10 +29,10 @@ class User {
   set _token(value) {
     this.__token = value;
   }
+
   getRegisterStructure(){
     return {username: this._username,
       password: this._password}
-
   }
 
 

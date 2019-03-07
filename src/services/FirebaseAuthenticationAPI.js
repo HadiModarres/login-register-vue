@@ -28,6 +28,7 @@ class FirebaseAuthenticationAPI extends AuthenticationAPI{
         .where('password', '==', user._password)
         .get()
         .then(function (querySnapshot) {
+          console.log('got data');
           querySnapshot.forEach(function (doc) {
             // doc.data() is never undefined for query doc snapshots
             console.log(doc.id, " => ", doc.data());
