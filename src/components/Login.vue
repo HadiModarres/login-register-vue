@@ -35,14 +35,13 @@
         let user = new User();
         user._username = username;
         user._password = password;
-        authenticator.sendLoginRequest(user).then((value => {
+        authenticator.loginUser(user).then((value => {
           console.log('successful login, token received: ' + value);
           user._token=value;
           alert("logged in: " + user._token);
         }), (reason => {
           // todo inform user of the problem
         }));
-
       }
     },
     data() {

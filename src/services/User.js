@@ -28,12 +28,12 @@ class User {
   set _token(value) {
     this.__token = value;
   }
-
-  login(){
+  getRegisterStructure(){
+    return {username: this._username,
+      password: this._password}
 
   }
-  register(){
-  }
+
 
 }
 

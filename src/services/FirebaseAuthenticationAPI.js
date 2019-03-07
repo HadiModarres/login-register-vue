@@ -17,7 +17,7 @@ class FirebaseAuthenticationAPI extends AuthenticationAPI{
    * @param user
    * @returns {Promise}
    */
-  sendLoginRequest(user){
+  loginUser(user){
       // let promise = new Promise((resolve, reject) => {
       //   resolve("sample_token");
       // });
@@ -31,6 +31,7 @@ class FirebaseAuthenticationAPI extends AuthenticationAPI{
           querySnapshot.forEach(function (doc) {
             // doc.data() is never undefined for query doc snapshots
             console.log(doc.id, " => ", doc.data());
+
             resolve(doc.id);
           });
         })
@@ -46,8 +47,31 @@ class FirebaseAuthenticationAPI extends AuthenticationAPI{
    * @param user
    * @returns {Promise}
    */
-  sendRegiserRequest(user){
-   // todo
+  registerUser(user){
+    let db = firebase.firestore();
+    let userAlreadyExists = false;
+    let promise = new Promise((resolve,reject)=>{
+      db.collection('users').where('username','==',user._username).get()
+        .then((value => {
+            // username exists
+            value.forEach((doc)=>{
+              reject("username already exists");
+              userAlreadyExists = true;
+            });
+            if (userAlreadyExists){
+              return;
+            }
+            //insert new user
+            db.collection('users').add(user.getRegisterStructure()).then((docRef)=>{
+              // added successfully
+              resolve(user);
+            },(error)=>{
+              reject("register failed: " + error.message());
+            });
+        }));
+    });
+
+    return promise;
   }
 }
 
