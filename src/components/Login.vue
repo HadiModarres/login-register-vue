@@ -38,7 +38,7 @@
         authenticator.sendLoginRequest(user).then((value => {
           console.log('successful login, token received: ' + value);
           user._token=value;
-          // todo redirect to dashboard
+          alert("logged in: " + user._token);
         }), (reason => {
           // todo inform user of the problem
         }));

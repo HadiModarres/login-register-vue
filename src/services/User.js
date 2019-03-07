@@ -1,4 +1,15 @@
 class User {
+  get _username() {
+    return this.__username;
+  }
+
+  get _password() {
+    return this.__password;
+  }
+
+  get _token() {
+    return this.__token;
+  }
   constructor() {
     this.__username = undefined;
     this.__password = undefined;
