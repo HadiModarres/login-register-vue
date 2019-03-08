@@ -1,14 +1,14 @@
 <template>
   <div>
     <h1>Register</h1>
-    <form @submit.prevent="handleRegister(e)">
+    <form @submit.prevent="handleRegister">
       <div class="form-group">
         <label>First Name</label>
-        <input v-model="firstName" type="text" class="form-control">
+        <input required minlength="2" v-model="firstName" type="text" class="form-control">
       </div>
       <div class="form-group">
         <label>Last Name</label>
-        <input v-model="lastName" type="text" class="form-control">
+        <input required minlength="2" v-model="lastName" type="text" class="form-control">
       </div>
 
       <div class="form-group">
@@ -19,18 +19,18 @@
 
       <div class="form-group">
         <label>Australian Number</label>
-        <input v-model="phone" type="text" pattern="(^1300\d{6}$)|(^1800|1900|1902\d{6}$)|(^0[2|3|7|8]{1}[0-9]{8}$)|(^13\d{4}$)|(^04\d{2,3}\d{6}$)" class="form-control">
+        <input id="phone" v-model="phone" type="text" pattern="(^1300\d{6}$)|(^1800|1900|1902\d{6}$)|(^0[2|3|7|8]{1}[0-9]{8}$)|(^13\d{4}$)|(^04\d{2,3}\d{6}$)" class="form-control">
       </div>
 
       <div class="form-group">
         <label>Password</label>
-        <input v-model="password" type="password" required class="form-control">
+        <input id="password" v-model="password" type="password" required class="form-control">
 
       </div>
 
       <div class="form-group">
         <label>Confirm Password</label>
-        <input type="password" class="form-control">
+        <input required id="confirm" type="password" class="form-control">
 
       </div>
 
@@ -52,7 +52,12 @@
     export default {
         name: "Register",
       methods:{
-          handleRegister(e){
+          handleRegister(){
+            if (document.getElementById('confirm').value != document.getElementById('password').value) {
+              console.log('passwords dont match');
+              // todo appropriate message html
+              return;
+            }
             let fireStoreAPI = new FirebaseAuthenticationAPI();
             let user = new User();
             user.username = this.email;
