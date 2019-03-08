@@ -1,7 +1,10 @@
 <template>
   <div>
-  <h1>Dashboard</h1>
-  <h2> {{user._username}} </h2>
+    <h1>Dashboard</h1>
+    <h2> {{user._username}} </h2>
+    <button v-on:click="settingsButtonClicked" class="btn btn-primary">
+      Settings
+    </button>
   </div>
 </template>
 
@@ -13,6 +16,11 @@
       data(){
           return{
             sample: 'sample'
+          }
+      },
+      methods:{
+          settingsButtonClicked(){
+            this.$router.push({name: "Settings", params:{user: this.user}});
           }
       }
     }
