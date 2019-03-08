@@ -4,11 +4,11 @@
     <form @submit.prevent="handleRegister(e)">
       <div class="form-group">
         <label>First Name</label>
-        <input type="text" class="form-control">
+        <input v-model="firstName" type="text" class="form-control">
       </div>
       <div class="form-group">
         <label>Last Name</label>
-        <input type="text" class="form-control">
+        <input v-model="lastName" type="text" class="form-control">
       </div>
 
       <div class="form-group">
@@ -19,7 +19,7 @@
 
       <div class="form-group">
         <label>Australian Number</label>
-        <input type="text" pattern="(^1300\d{6}$)|(^1800|1900|1902\d{6}$)|(^0[2|3|7|8]{1}[0-9]{8}$)|(^13\d{4}$)|(^04\d{2,3}\d{6}$)" class="form-control">
+        <input v-model="phone" type="text" pattern="(^1300\d{6}$)|(^1800|1900|1902\d{6}$)|(^0[2|3|7|8]{1}[0-9]{8}$)|(^13\d{4}$)|(^04\d{2,3}\d{6}$)" class="form-control">
       </div>
 
       <div class="form-group">
@@ -54,10 +54,12 @@
       methods:{
           handleRegister(e){
             let fireStoreAPI = new FirebaseAuthenticationAPI();
-            const{email,password} = this;
             let user = new User();
-            user._username = email;
-            user._password = password;
+            user.username = this.email;
+            user.password = this.password;
+            user.firstName = this.firstName;
+            user.lastName = this.lastName;
+            user.phone = this.phone;
             fireStoreAPI.registerUser(user).then((value => {
               alert("registered successfully: "+value);
               this.$router.push('Login');
@@ -69,7 +71,10 @@
       data(){
           return{
             email: '',
-            password: ''
+            password: '',
+            firstName: '',
+            lastName: '',
+            phone: ''
           }
       }
     }

@@ -15,7 +15,7 @@
         <button class="btn btn-primary">
           Change Password
         </button>
-        <router-link to="/Dashboard">Go back to dashboard</router-link>
+        <button v-on:click="backToDashboard" to="/Dashboard">Go back to dashboard</button>
       </div>
 
     </form>
@@ -36,6 +36,9 @@
               let firebase_api = new FirebaseAuthenticationAPI();
               firebase_api.changePassword(this.user, this.new_password);
             }
+          },
+          backToDashboard(){
+            this.$router.push({name: "Dashboard", params:{user: this.user}});
           }
         },
       data() {

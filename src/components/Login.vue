@@ -33,8 +33,8 @@
         const {username, password} = this;
         let authenticator = new FirebaseAuthenticationAPI();
         let user = new User();
-        user._username = username;
-        user._password = password;
+        user.username = username;
+        user.password = password;
         authenticator.loginUser(user).then((value => {
           console.log('successful login, token received: ' + value);
           user._token=value;
@@ -42,7 +42,6 @@
           this.$router.push({name:'Dashboard' , params: {user: user}});
         }), (reason => {
           // todo inform user of the problem
-
           alert('login failed');
         }));
       }

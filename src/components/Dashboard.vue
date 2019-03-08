@@ -1,10 +1,11 @@
 <template>
-  <div>
+  <div v-if="user">
     <h1>Dashboard</h1>
-    <h2> {{user._username}} </h2>
+    <h2> Welcome {{user.firstName}} {{user.lastName}} </h2>
     <button v-on:click="settingsButtonClicked" class="btn btn-primary">
       Settings
     </button>
+
   </div>
 </template>
 
@@ -22,8 +23,14 @@
           settingsButtonClicked(){
             this.$router.push({name: "Settings", params:{user: this.user}});
           }
+      },
+      created:function(){
+         if (!this.user){
+           this.$router.push("Login");
+         }
       }
     }
+
 
 </script>
 
