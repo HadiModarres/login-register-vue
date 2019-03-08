@@ -23,14 +23,18 @@
 </template>
 
 <script>
+    import {FirebaseAuthenticationAPI} from "@/services/FirebaseAuthenticationAPI";
+
     export default {
         name: "Settings",
         methods: {
           handleSubmit(e) {
             if (this.current_pass !== this.user._password){
               alert('wrong password');
+              // todo show appropriate html message
             }else{
-              alert('correct password');
+              let firebase_api = new FirebaseAuthenticationAPI();
+              firebase_api.changePassword(this.user, this.new_password);
             }
           }
         },
