@@ -1,25 +1,29 @@
 <template>
-    <div>
+    <div class="jumbotron container col-6">
      <h1>Login</h1>
+      <br>
+      <div class="container col-8">
      <form @submit.prevent="handleSubmit">
        <div class="form-group">
          <label>Email Address</label>
          <input v-model="username" required class="form-control" type="email" placeholder="Enter your email address">
-
        </div>
        <div class="form-group">
          <label>Password</label>
          <input v-model="password" required class="form-control" type="password" minlength="8" placeholder="Enter your password">
        </div>
+       <br>
        <div class="form-group">
-        <button class="btn btn-primary">
+        <button class="btn btn-primary btn-lg">
          Login
         </button>
-         <router-link to="/register">Register</router-link>
+        <br/>
+         <br>
+         <router-link to="/register">Create an account</router-link>
        </div>
-
      </form>
-    </div>
+        </div>
+        </div>
 </template>
 
 <script>
