@@ -1,19 +1,19 @@
 <template>
     <div class="jumbotron container col-6">
-     <h1>Login</h1>
+     <h1 style="text-align: center">Login</h1>
       <br>
       <div class="container col-8">
      <form @submit.prevent="handleSubmit">
        <div class="form-group">
-         <label>Email Address</label>
+         <label class="lead">Email Address</label>
          <input v-model="username" required class="form-control" type="email" placeholder="Enter your email address">
        </div>
        <div class="form-group">
-         <label>Password</label>
+         <label class="lead">Password</label>
          <input v-model="password" required class="form-control" type="password" minlength="8" placeholder="Enter your password">
        </div>
        <br>
-       <div class="form-group">
+       <div style="text-align: center" class="form-group">
         <button class="btn btn-primary btn-lg">
          Login
         </button>

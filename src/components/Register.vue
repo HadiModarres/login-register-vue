@@ -1,47 +1,51 @@
 <template>
-  <div>
-    <h1>Register</h1>
+  <div class="jumbotron container col-6">
+    <h1 style="text-align: center">Register</h1>
+    <br>
+    <div class="container col-8">
     <form @submit.prevent="handleRegister">
       <div class="form-group">
-        <label>First Name</label>
+        <label class="lead">First Name</label>
         <input required minlength="2" v-model="firstName" type="text" class="form-control">
       </div>
       <div class="form-group">
-        <label>Last Name</label>
+        <label class="lead">Last Name</label>
         <input required minlength="2" v-model="lastName" type="text" class="form-control">
       </div>
 
       <div class="form-group">
-        <label>Email Address Name</label>
+        <label class="lead">Email Address Name</label>
         <input v-model="email" type="email" required class="form-control">
 
       </div>
 
       <div class="form-group">
-        <label>Australian Number</label>
+        <label class="lead">Australian Number</label>
         <input id="phone" v-model="phone" type="text" pattern="(^1300\d{6}$)|(^1800|1900|1902\d{6}$)|(^0[2|3|7|8]{1}[0-9]{8}$)|(^13\d{4}$)|(^04\d{2,3}\d{6}$)" class="form-control">
       </div>
 
       <div class="form-group">
-        <label>Password</label>
+        <label class="lead">Password</label>
         <input id="password" v-model="password" type="password" required class="form-control">
 
       </div>
 
       <div class="form-group">
-        <label>Confirm Password</label>
+        <label class="lead">Confirm Password</label>
         <input required id="confirm" type="password" class="form-control">
-
       </div>
+      <br>
 
-      <div class="form-group">
-        <button class="btn btn-primary">
+      <div style="text-align: center" class="form-group">
+        <button class="btn btn-primary btn-lg">
           Register
         </button>
+        <br>
+        <br>
         <router-link to="/login">Already have an account?</router-link>
       </div>
-
     </form>
+    </div>
   </div>
 </template>
 
