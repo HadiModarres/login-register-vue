@@ -1,21 +1,23 @@
 <template>
-  <div>
+  <div class="jumbotron container col-10">
     <h1>Settings</h1>
+    <br>
     <form @submit.prevent="handleSubmit">
       <div class="form-group">
-        <label>Current Password</label>
+        <label class="lead">Current Password</label>
         <input v-model="current_pass" required class="form-control" type="password" placeholder="Current Password">
 
       </div>
       <div class="form-group">
-        <label>New Password</label>
+        <label class="lead">New Password</label>
         <input v-model="new_password" required class="form-control" type="password" minlength="8" placeholder="New Password">
       </div>
+      <br>
       <div class="form-group">
         <button class="btn btn-primary">
           Change Password
         </button>
-        <button v-on:click="backToDashboard" to="/Dashboard">Go back to dashboard</button>
+        <button class="btn btn-default" v-on:click="backToDashboard" to="/Dashboard">Go back to dashboard</button>
       </div>
 
     </form>
