@@ -46,7 +46,7 @@
           this.$router.push({name:'Dashboard' , params: {user: user}});
         }), (reason => {
           // todo inform user of the problem
-          alert('login failed');
+          alert('login failed '+ reason);
         }));
       }
     },

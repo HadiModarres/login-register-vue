@@ -27,7 +27,6 @@
       <div class="form-group">
         <label class="lead">Password</label>
         <input id="password" v-model="password" type="password" required class="form-control">
-
       </div>
 
       <div class="form-group">
