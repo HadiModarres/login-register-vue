@@ -10,7 +10,7 @@ class FirebaseAuthenticationAPI extends AuthenticationAPI{
     // console.log("config: " + config.FirebaseConfig);
     if (!firebaseInitialized) {
       firebase.initializeApp(config.FirebaseConfig);
-      console.log('initializing')
+      console.log('initializing');
       firebaseInitialized=true;
     }
   }
@@ -58,7 +58,10 @@ class FirebaseAuthenticationAPI extends AuthenticationAPI{
 
 
   isLoggedIn(){
-    return  firebase.auth().currentUser? true : false ;
+    if (!firebase.auth().currentUser) {
+      return false;
+    }
+    return true;
   }
   /**
    *

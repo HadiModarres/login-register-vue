@@ -5,6 +5,7 @@ import Login from '@/components/Login'
 import Register from '@/components/Register'
 import Settings from '@/components/Settings'
 import {FirebaseAuthenticationAPI} from "@/services/FirebaseAuthenticationAPI";
+const firebase = require('firebase');
 
 
 Vue.use(Router)
@@ -54,15 +55,16 @@ router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)){
     if (!firebaseAuth.isLoggedIn()){
       alert('tried to access restricted page while not logged in');
-      next('/login');
+      next(Login);
     }else{
       next();
     }
   }else if(to.matched.some(record => record.meta.requiresGuest)){
-    if (!firebaseAuth.isLoggedIn()){
-      next();
-    }else{
+    if (firebaseAuth.isLoggedIn()){
+      alert('logged in already');
       next('/');
+    }else{
+      next();
     }
   }
 
