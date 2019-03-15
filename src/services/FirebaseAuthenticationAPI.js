@@ -26,6 +26,18 @@ class FirebaseAuthenticationAPI extends AuthenticationAPI{
     return promise;
   }
 
+  signOut(user){
+    let promise = new Promise((resolve, reject) => {
+      firebase.auth().signOut().then((value => {
+        resolve();
+      }), (reason => {
+        reject(reason);
+      }));
+    });
+
+    return promise;
+  }
+
   /**
    *
    * @param user

@@ -1,5 +1,5 @@
 <template>
-  <div class="jumbotron container col-6">
+  <div class="jumbotron container col-6 card-5">
     <h1 style="text-align: center">Register</h1>
     <br>
     <div class="container col-8">
