@@ -4,34 +4,70 @@ import Dashboard from '@/components/Dashboard'
 import Login from '@/components/Login'
 import Register from '@/components/Register'
 import Settings from '@/components/Settings'
+import {FirebaseAuthenticationAPI} from "@/services/FirebaseAuthenticationAPI";
+const firebase = require('firebase');
 
 
 Vue.use(Router)
 
-export default new Router({
+let router = new Router({
   routes: [
     {
       path: '/',
       name: 'Dashboard',
       component: Dashboard,
-      props: true
+      props: true,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/Login',
       name: 'Login',
-      component: Login
+      component: Login,
+      meta: {
+        requiresGuest: true
+      }
     },
     {
       path: '/Register',
       name: 'Register',
-      component: Register
+      component: Register,
+      meta: {
+        requiresGuest: true
+      }
     },
     {
       path: '/Settings',
       name: 'Settings',
       component: Settings,
-      props: true
+      props: true,
+      meta: {
+        requiresAuth: true
+      }
     }
 
   ]
-})
+});
+
+let firebaseAuth = new FirebaseAuthenticationAPI();
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)){
+    if (!firebaseAuth.isLoggedIn()){
+      next(Login);
+    }else{
+      next();
+    }
+  }else if(to.matched.some(record => record.meta.requiresGuest)){
+    if (firebaseAuth.isLoggedIn()){
+      next('/');
+    }else{
+      next();
+    }
+  }
+
+
+
+});
+
+export default router;

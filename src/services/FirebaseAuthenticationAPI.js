@@ -7,10 +7,10 @@ class FirebaseAuthenticationAPI extends AuthenticationAPI{
 
   constructor() {
     super();
-    console.log("config: " + config.FirebaseConfig);
+    // console.log("config: " + config.FirebaseConfig);
     if (!firebaseInitialized) {
       firebase.initializeApp(config.FirebaseConfig);
-      console.log('initializing')
+      console.log('initializing');
       firebaseInitialized=true;
     }
   }
@@ -21,66 +21,87 @@ class FirebaseAuthenticationAPI extends AuthenticationAPI{
    * @returns {Promise}
    */
   loginUser(user){
-      // let promise = new Promise((resolve, reject) => {
-      //   resolve("sample_token");
-      // });
-      // return promise;
-    let db = firebase.firestore();
     let promise = new Promise((resolve, reject) => {
-      db.collection("users").where("username", "==", user.username)
-        .where('password', '==', user.password)
-        .get()
-        .then(function (querySnapshot) {
-          console.log('got data');
-          querySnapshot.forEach(function (doc) {
-            // doc.data() is never undefined for query doc snapshots
-            console.log('hello');
-            console.log(doc.id, " => ", doc.data());
-            user.firstName = doc.data().firstname;
-            user.lastName = doc.data().lastname;
-            user.phone = doc.data().phone;
-            resolve(doc.id);
-            return;
-          });
-          reject('');
-        })
-        .catch(function (error) {
-          console.log("Error getting documents: ", error);
-        });
+      firebase.auth().signInWithEmailAndPassword(user.username, user.password).then((value)=>{
+        resolve(value);
+      },(reason => {
+        reject(reason);
+      }));
     });
+
     return promise;
+    // let db = firebase.firestore();
+    // let promise = new Promise((resolve, reject) => {
+    //   db.collection("users").where("username", "==", user.username)
+    //     .where('password', '==', user.password)
+    //     .get()
+    //     .then(function (querySnapshot) {
+    //       console.log('got data');
+    //       querySnapshot.forEach(function (doc) {
+    //         // doc.data() is never undefined for query doc snapshots
+    //         console.log('hello');
+    //         console.log(doc.id, " => ", doc.data());
+    //         user.firstName = doc.data().firstname;
+    //         user.lastName = doc.data().lastname;
+    //         user.phone = doc.data().phone;
+    //         resolve(doc.id);
+    //         return;
+    //       });
+    //       reject('');
+    //     })
+    //     .catch(function (error) {
+    //       console.log("Error getting documents: ", error);
+    //     });
+    // });
+    // return promise;
   }
 
+
+  isLoggedIn(){
+    if (!firebase.auth().currentUser) {
+      return false;
+    }
+    return true;
+  }
   /**
    *
    * @param user
    * @returns {Promise}
    */
   registerUser(user){
-    let db = firebase.firestore();
-    let userAlreadyExists = false;
     let promise = new Promise((resolve,reject)=>{
-      db.collection('users').where('username','==',user.username).get()
-        .then((value => {
-            // username exists
-            value.forEach((doc)=>{
-              reject("username already exists");
-              userAlreadyExists = true;
-            });
-            if (userAlreadyExists){
-              return;
-            }
-            //insert new user
-            db.collection('users').add(user.getRegisterStructure()).then((docRef)=>{
-              // added successfully
-              resolve(user);
-            },(error)=>{
-              reject("register failed: " + error.message());
-            });
-        }));
+      firebase.auth().createUserWithEmailAndPassword(user.username, user.password).then((value => {
+        resolve(value);
+      }), reason => {
+        reject(reason);
+      });
     });
 
     return promise;
+
+    // let db = firebase.firestore();
+    // let userAlreadyExists = false;
+    // let promise = new Promise((resolve,reject)=>{
+    //   db.collection('users').where('username','==',user.username).get()
+    //     .then((value => {
+    //         // username exists
+    //         value.forEach((doc)=>{
+    //           reject("username already exists");
+    //           userAlreadyExists = true;
+    //         });
+    //         if (userAlreadyExists){
+    //           return;
+    //         }
+    //         //insert new user
+    //         db.collection('users').add(user.getRegisterStructure()).then((docRef)=>{
+    //           // added successfully
+    //           resolve(user);
+    //         },(error)=>{
+    //           reject("register failed: " + error.message());
+    //         });
+    //     }));
+    // });
+    // return promise;
   }
 
   changePassword(user,newPassword){
