@@ -14,6 +14,17 @@ class FirebaseAuthenticationAPI extends AuthenticationAPI{
       firebaseInitialized=true;
     }
   }
+  updatePassword(user,password){
+    let promise = new Promise((resolve, reject) => {
+      firebase.auth().currentUser.updatePassword(password).then((value => {
+        resolve();
+      }),(reason => {
+        reject(reason);
+      }));
+
+    });
+    return promise;
+  }
 
   /**
    *
@@ -104,15 +115,6 @@ class FirebaseAuthenticationAPI extends AuthenticationAPI{
     // return promise;
   }
 
-  changePassword(user,newPassword){
-    let db = firebase.firestore();
-    let userRef = db.collection('users').doc(user._token);
-    userRef.set({password: newPassword},{merge: true}).then((value => {
-      window.alert('password updated');
-    }),(reason => {
-      window.alert('password update failed');
-    }));
-  }
 }
 
 export {FirebaseAuthenticationAPI}
