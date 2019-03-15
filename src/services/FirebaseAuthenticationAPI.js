@@ -1,6 +1,7 @@
 import {AuthenticationAPI} from './AuthenticationAPI'
 const firebase = require('firebase');
 let config = require('@/helpers/configuration');
+import {User} from "@/services/User";
 
 let firebaseInitialized = false;
 class FirebaseAuthenticationAPI extends AuthenticationAPI{
@@ -79,6 +80,48 @@ class FirebaseAuthenticationAPI extends AuthenticationAPI{
     // return promise;
   }
 
+  addUserData(user){
+    let db = firebase.firestore();
+    let promise = new Promise((resolve,reject)=>{
+      db.collection('users').add(user.getRegisterStructure()).then((docRef)=>{
+        // added successfully
+        resolve(user);
+      },(error)=>{
+        reject("register failed: " + error.message());
+      });
+    });
+    return promise;
+  }
+
+  getCurrentUser(){
+    let curUser = firebase.auth().currentUser;
+    let user = new User();
+    let db = firebase.firestore();
+    let email = curUser.email;
+
+    let promise = new Promise((resolve, reject) => {
+      db.collection("users").where("username", "==", email)
+        .get()
+        .then(function (querySnapshot) {
+          console.log('got data');
+          querySnapshot.forEach(function (doc) {
+            // doc.data() is never undefined for query doc snapshots
+            console.log('hello');
+            console.log(doc.id, " => ", doc.data());
+            user.firstName = doc.data().firstname;
+            user.lastName = doc.data().lastname;
+            user.phone = doc.data().phone;
+            resolve(user);
+            return;
+          });
+          reject('user not found');
+        })
+        .catch(function (error) {
+          console.log("Error getting documents: ", error);
+        });
+    });
+    return promise;
+  }
 
   isLoggedIn(){
     if (!firebase.auth().currentUser) {

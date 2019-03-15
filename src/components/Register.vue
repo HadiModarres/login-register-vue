@@ -69,7 +69,10 @@
             user.lastName = this.lastName;
             user.phone = this.phone;
             fireStoreAPI.registerUser(user).then((value => {
-              alert("registered successfully: "+value);
+              fireStoreAPI.addUserData(user).then((value) => {
+              }, (reason => {
+                alert("couldn't store user info");
+              }));
               this.$router.push('Login');
             }),(reason => {
               alert("register failed: " + reason);

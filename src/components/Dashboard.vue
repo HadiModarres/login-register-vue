@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <h1>Dashboard</h1>
-    <h2> Welcome </h2>
+    <h2> Welcome {{firstName}} {{lastName}}</h2>
     <button v-on:click="settingsButtonClicked" class="btn btn-primary">
       Settings
     </button>
@@ -24,7 +24,9 @@
         props:{user: Object},
       data(){
           return{
-            sample: 'sample'
+            firstName: '',
+            lastName: '',
+            phoneNumber: '',
           }
       },
       methods:{
@@ -41,7 +43,20 @@
             }));
 
           }
+      },
+      created: function () {
+        let authentication_api = new FirebaseAuthenticationAPI();
+        authentication_api.getCurrentUser().then((user) => {
+          this.firstName = user.firstName;
+          this.lastName = user.lastName;
+          this.phoneNumber = user.phone;
+        }, (reason => {
+          alert("error getting user info");
+        }));
+
       }
+
+
     }
 </script>
 

@@ -12,7 +12,6 @@ class User {
   getRegisterStructure() {
     return {
       username: this.username,
-      password: this.password,
       phone: this.phone,
       firstname: this.firstName,
       lastname: this.lastName
