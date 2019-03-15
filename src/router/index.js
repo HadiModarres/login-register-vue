@@ -54,14 +54,12 @@ let firebaseAuth = new FirebaseAuthenticationAPI();
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)){
     if (!firebaseAuth.isLoggedIn()){
-      alert('tried to access restricted page while not logged in');
       next(Login);
     }else{
       next();
     }
   }else if(to.matched.some(record => record.meta.requiresGuest)){
     if (firebaseAuth.isLoggedIn()){
-      alert('logged in already');
       next('/');
     }else{
       next();
