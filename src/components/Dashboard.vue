@@ -1,15 +1,13 @@
 <template>
-  <div class="container">
-    <h1>Dashboard</h1>
-    <h2> Welcome {{firstName}} {{lastName}}</h2>
-    <button v-on:click="settingsButtonClicked" class="btn btn-primary">
-      Settings
-    </button>
+  <div>
+    <UserHeader pageName="Dashboard"></UserHeader>
     <br>
     <br>
-    <button v-on:click="signoutButtonClicked" class="btn btn-primary">
-      Sign out
-    </button>
+    <br>
+    <br>
+
+
+    <h2 style="text-align: center"> Welcome {{firstName}} {{lastName}}</h2>
 
   </div>
 </template>
@@ -17,11 +15,14 @@
 <script>
   import {FirebaseAuthenticationAPI} from "@/services/FirebaseAuthenticationAPI";
   import Login from "@/components/Login";
+  import UserHeader from "@/components/Header";
+  import Settings from "@/components/Settings"
 
   console.log('dashboard running');
     export default {
         name: "Dashboard",
-        props:{user: Object},
+      components: {UserHeader},
+      props:{user: Object},
       data(){
           return{
             firstName: '',
@@ -31,7 +32,7 @@
       },
       methods:{
           settingsButtonClicked(){
-            this.$router.push({name: "Settings", params:{user: this.user}});
+            this.$router.push(Settings);
           },
           signoutButtonClicked(){
             let authentication_api = new FirebaseAuthenticationAPI();
