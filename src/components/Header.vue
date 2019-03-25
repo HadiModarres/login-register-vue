@@ -30,7 +30,7 @@
   import 'bootstrap-vue/dist/bootstrap-vue.css'
   import {FirebaseAuthenticationAPI} from "@/services/FirebaseAuthenticationAPI"
   import Vue from 'vue'
-  // import Settings from "@/components/Settings"
+  import Settings from "@/components/Settings"
   import Login from "@/components/Login"
 
   Vue.use(BootstrapVue);
@@ -45,7 +45,7 @@
       },
       methods:{
         settingsButtonClicked(){
-          // this.$router.push(Settings);
+          this.$router.push(Settings);
         },
         signoutButtonClicked() {
           let authentication_api = new FirebaseAuthenticationAPI();

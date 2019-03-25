@@ -1,9 +1,12 @@
 <template>
   <div>
     <UserHeader pageName="Settings"></UserHeader>
-    <div class="jumbotron container col-10">
+    <br>
+    <br>
+    <div class="jumbotron container col-10 card-5">
       <br>
       <form @submit.prevent="handleSubmit">
+        <div v-show="message" v-bind:class="{'alert-danger': error, 'alert-success': !error}" class="alert">{{this.message}}</div>
         <div class="form-group">
           <label class="lead">New Password</label>
           <input v-model="new_password" required class="form-control" type="password" placeholder="New Password">
@@ -36,14 +39,17 @@
     methods: {
       handleSubmit(e) {
         if (this.new_password !== this.new_password_confirm) {
-          alert("passwords don't match");
-          // todo show appropriate html message
+          this.message = "Passwords do not match.";
+          this.error = true;
+
         } else {
           let firebase_api = new FirebaseAuthenticationAPI();
           firebase_api.updatePassword(this.user, this.new_password).then((value => {
-            alert("password changed");
+            this.message = "Password changed.";
+            this.error = false;
           }), (reason => {
-            alert("couldn't change password: " + reason);
+            this.error = true;
+            this.message = reason;
           }));
         }
       },
@@ -55,6 +61,8 @@
       return {
         new_password: '',
         new_password_confirm: '',
+        message: undefined,
+        error : false
       }
     },
     components: {UserHeader}
